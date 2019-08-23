@@ -84,13 +84,13 @@ var Util = {
   systemLabelSortComparator: function(a, b) {
     var priorities = {
       UNREAD: 1,
-      IMPORTANT: 2,
-      INBOX: 3,
+      IMPORTANT: 3,
+      INBOX: 2,
       STARRED: 4,
-      DRAFT: 5,
-      SENT: 6,
-      SPAM: 7,
-      TRASH: 8
+      DRAFT: 6,
+      SENT: 5,
+      SPAM: 8,
+      TRASH: 7
     };
     return priorities[a.label.id] - priorities[b.label.id];
   },
@@ -103,22 +103,6 @@ var Util = {
     var nextDate = new Date(date.toDateString());
     nextDate.setDate(nextDate.getDate() + 1);
     return nextDate;
-  },
-  
-  sendGAEvent: function(action, label) {
-    ajax({
-      url: 'https://www.google-analytics.com/collect',
-      method: 'post',
-      data: {
-        v: 1,
-        tid: 'UA-39573523-5',
-        cid: Pebble.getAccountToken(),
-        t: 'event',
-        ec: 'workmate-app-' + appinfo.versionLabel,
-        ea: action,
-        el: label
-      }
-    });
   }
 };
 

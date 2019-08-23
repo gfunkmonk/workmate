@@ -8,13 +8,13 @@ var MainMenu = function() {
   this.menu = new UI.Menu({
     sections: [{
       items: [{
-        title: 'Mail',
+        title: 'Gmail',
         icon: 'images/envelope.png'
       }, {
         title: 'Calendar',
         icon: 'images/calendar.png'
       }, {
-        title: 'Tasks',
+        title: 'GTasks',
         icon: 'images/pushpin.png'
       }]
     }]
