@@ -84,12 +84,12 @@ var Util = {
   systemLabelSortComparator: function(a, b) {
     var priorities = {
       UNREAD: 1,
-      IMPORTANT: 2,
-      INBOX: 3,
+      INBOX: 2,
+      IMPORTANT: 3,
       STARRED: 4,
-      DRAFT: 5,
-      SENT: 6,
-      SPAM: 7,
+      SENT: 5,
+      SPAM: 6,
+      DRAFT: 7,
       TRASH: 8
     };
     return priorities[a.label.id] - priorities[b.label.id];
@@ -111,7 +111,7 @@ var Util = {
       method: 'post',
       data: {
         v: 1,
-        tid: 'UA-39573523-5',
+        tid: 'UA-149378423-1',
         cid: Pebble.getAccountToken(),
         t: 'event',
         ec: 'workmate-app-' + appinfo.versionLabel,

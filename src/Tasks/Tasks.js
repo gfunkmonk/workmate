@@ -15,7 +15,7 @@ var Tasks = {
       GApi.getAccessToken(function(accessToken) {
         var url = 'https://www.googleapis.com/tasks/v1/users/@me/lists?access_token=' +
           encodeURIComponent(accessToken);
-        
+
         ajax({
           url: url,
           type: 'json'
@@ -25,11 +25,11 @@ var Tasks = {
         }.bind(this), function(error) {
           new ErrorCard('Could not get task lists');
           if (errorCallback) errorCallback();
-        }); 
+        });
       }.bind(this), errorCallback);
     }
   },
-  
+
   Tasks: {
     list: function(tasklistId, callback, errorCallback) {
       GApi.getAccessToken(function(accessToken) {
@@ -37,7 +37,7 @@ var Tasks = {
             encodeURIComponent(tasklistId) +
             '/tasks?maxResults=10&access_token=' +
             encodeURIComponent(accessToken);
-      
+
         ajax({
           url: url,
           type: 'json'

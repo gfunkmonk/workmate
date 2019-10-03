@@ -8,14 +8,14 @@ var GApi = {
     if (googleOauth) {
       var now = new Date();
       var expiry = (googleOauth['created'] + googleOauth['expires_in']) * 1000;
-      
+
       if (now.valueOf() < expiry) {
         callback(googleOauth['access_token']);
       } else {
         var refreshToken = googleOauth['refresh_token'];
-        var url = 'https://legacy.keanulee.com/workmate/configure/google_oauth.php?refresh_token=' +
+        var url = 'https://login.gfunkmonk.info/google_oauth.php?refresh_token=' +
             encodeURIComponent(refreshToken);
-        
+
         ajax({
           url: url,
           type: 'json'
@@ -33,7 +33,7 @@ var GApi = {
         }, function(error) {
           new ErrorCard('Could not refresh Google access token');
           if (errorCallback) errorCallback();
-        }); 
+        });
       }
     } else {
       new ErrorCard('Not signed in', 'Sign in using this app\'s settings on the Pebble app');
