@@ -5,7 +5,6 @@
     ],
     "companyName": "Keanu Lee",
     "longName": "Workmate",
-    "projectType": "pebblejs",
     "resources": {
         "media": [
             {
@@ -71,11 +70,19 @@
             }
         ]
     },
+    "sdkVersion": "3",
     "shortName": "Workmate",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+    "aplite",
+    "basalt",
+    "chalk"
+    ],
     "uuid": "d40e830b-84cc-4a2e-b673-178762b1bc57",
     "versionCode": 1,
     "versionLabel": "1.1",
     "watchapp": {
-        "watchface": false
+        "watchface": false,
+        "hiddenApp": false
     }
 }
