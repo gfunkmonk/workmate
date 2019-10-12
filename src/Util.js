@@ -84,13 +84,13 @@ var Util = {
   systemLabelSortComparator: function(a, b) {
     var priorities = {
       UNREAD: 1,
-      INBOX: 2,
-      IMPORTANT: 3,
+      IMPORTANT: 2,
+      INBOX: 3,
       STARRED: 4,
-      SENT: 5,
-      SPAM: 6,
+      TRASH: 5,
+      SENT: 6,
       DRAFT: 7,
-      TRASH: 8
+      SPAM: 8
     };
     return priorities[a.label.id] - priorities[b.label.id];
   },
@@ -105,19 +105,19 @@ var Util = {
     return nextDate;
   },
   
-  sendGAEvent: function(action, label) {
-    ajax({
-      url: 'https://www.google-analytics.com/collect',
-      method: 'post',
-      data: {
-        v: 1,
-        tid: 'UA-149378423-1',
-        cid: Pebble.getAccountToken(),
-        t: 'event',
-        ec: 'workmate-app-' + appinfo.versionLabel,
-        ea: action,
-        el: label
-      }
+  //sendGAEvent: function(action, label) {
+  //  ajax({
+  //    url: 'https://www.google-analytics.com/collect',
+  //    method: 'post',
+  //    data: {
+  //      v: 1,
+  //      tid: 'UA-149378423-1',
+  //      cid: Pebble.getAccountToken(),
+  //      t: 'event',
+  //      ec: 'workmate-app-' + appinfo.versionLabel,
+  //      ea: action,
+  //      el: label
+  //    }
     });
   }
 };
