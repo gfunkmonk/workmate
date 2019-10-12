@@ -174,9 +174,9 @@ Settings.onCloseConfig = function(e) {
   // Work around for PebbleKit JS Android
   // On Android, an extra cancelled event occurs after a normal close
   if (e.response !== 'CANCELLED') {
-    state.ignoreCancelled++;
+    state.ignoreCancelled += 1;
   } else if (state.ignoreCancelled > 0) {
-    state.ignoreCancelled--;
+    state.ignoreCancelled -= 1;
     return;
   }
   var listener = util2.last(state.listeners);

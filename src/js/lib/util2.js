@@ -10,7 +10,7 @@ util2.noop = function() {};
 
 util2.count = function(o) {
   var i = 0;
-  for (var k in o) { ++i; }
+  for (var k in o) { i += 1; }
   return i;
 };
 
@@ -21,7 +21,7 @@ util2.copy = function(a, b) {
 };
 
 util2.toInteger = function(x) {
-  if (!isNaN(x = parseInt(x))) { return x; }
+  if (!isNaN(x = parseInt(x, 10))) { return x; }
 };
 
 util2.toNumber = function(x) {
@@ -59,7 +59,7 @@ var chunkSize = 128;
 
 var randomBytes = function(chunkSize) {
   var z = [];
-  for (var i = 0; i < chunkSize; ++i) {
+  for (var i = 0; i < chunkSize; i += 1) {
     z[i] = String.fromCharCode(Math.random() * 256);
   }
   return z.join('');

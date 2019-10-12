@@ -54,7 +54,9 @@ TasksTasksList.prototype.createMenu = function() {
 
   this.menu.on('longSelect', function(e) {
     var task = e.item.task;
-    if (task) new TasksTaskCard(task, this);
+    if (task) {
+      new TasksTaskCard(task, this);
+    }
   }.bind(this));
 
   this.menu.show();

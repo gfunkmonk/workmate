@@ -35,7 +35,7 @@ Wakeup.prototype._cleanup = function() {
   }
   var cleanupTime = Date.now() / 1000 - Wakeup.cleanupGracePeriod;
   var deleted = false;
-  for (var i = 0, ii = ids.length; i < ii; ++i) {
+  for (var i = 0, ii = ids.length; i < ii; i += 1) {
     id = ids[i];
     var wakeup = this.state.wakeups[id];
     if (wakeup.params.time < cleanupTime) {
@@ -64,7 +64,7 @@ Wakeup.prototype.get = function(id) {
 Wakeup.prototype.each = function(callback) {
   var i = 0;
   for (var id in this.state.wakeups) {
-    if (callback(this.get(id), i++) === false) {
+    if (callback(this.get(id), i += 1) === false) {
       break;
     }
   }
@@ -189,7 +189,7 @@ Wakeup.prototype._emitWakeupLaunch = function(e) {
   var callbacks = this._launchCallbacks;
   this._launchCallbacks = [];
 
-  for (var i = 0, ii = callbacks.length; i < ii; ++i) {
+  for (var i = 0, ii = callbacks.length; i < ii; i += 1) {
     if (callbacks[i](e) === false) {
       return false;
     }

@@ -93,7 +93,7 @@ WindowStack.prototype.remove = function(item, broadcast) {
 
 WindowStack.prototype.get = function(windowId) {
   var items = this._items;
-  for (var i = 0, ii = items.length; i < ii; ++i) {
+  for (var i = 0, ii = items.length; i < ii; i += 1) {
     var wind = items[i];
     if (wind._id() === windowId) {
       return wind;
@@ -103,7 +103,7 @@ WindowStack.prototype.get = function(windowId) {
 
 WindowStack.prototype.each = function(callback) {
   var items = this._items;
-  for (var i = 0, ii = items.length; i < ii; ++i) {
+  for (var i = 0, ii = items.length; i < ii; i += 1) {
     if (callback(items[i], i) === false) {
       break;
     }

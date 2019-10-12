@@ -16,7 +16,7 @@ var getExecPackage = function(execname) {
 
 var getExceptionFile = function(e, level) {
   var stack = e.stack.split('\n');
-  for (var i = level || 0, ii = stack.length; i < ii; ++i) {
+  for (var i = level || 0, ii = stack.length; i < ii; i += 1) {
     var line = stack[i];
     if (line.match(/^\$\d/)) {
       var path = getExecPackage(line);
@@ -30,7 +30,7 @@ var getExceptionFile = function(e, level) {
 
 var getExceptionScope = function(e, level) {
   var stack = e.stack.split('\n');
-  for (var i = level || 0, ii = stack.length; i < ii; ++i) {
+  for (var i = level || 0, ii = stack.length; i < ii; i += 1) {
     var line = stack[i];
     if (!line || line.match('native code')) { continue; }
     return line.match(/^\$\d/) && getExecPackage(line) || line;
@@ -87,7 +87,7 @@ var toSafeName = function(name) {
 var nextId = 1;
 
 packageImpl.loadPackage = function(pkg, loader) {
-  pkg.execname = toSafeName(pkg.name) + '$' + nextId++;
+  pkg.execname = toSafeName(pkg.name) + '$' + (nextId += 1);
   pkg.fapply = myutil.defun(pkg.execname, ['f', 'args'],
     'return f.apply(this, args)'
   );

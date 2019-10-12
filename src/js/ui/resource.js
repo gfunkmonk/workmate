@@ -17,7 +17,7 @@ Resource.getId = function(opt) {
   }
   path = path.replace(/#.*/, '');
   var cname = myutil.toCConstantName(path);
-  for (var i = 0, ii = resources.length; i < ii; ++i) {
+  for (var i = 0, ii = resources.length; i < ii; i += 1) {
     var res = resources[i];
     if (res.name === cname || res.file === path) {
       return i + 1;

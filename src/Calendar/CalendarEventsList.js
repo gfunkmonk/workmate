@@ -29,12 +29,16 @@ CalendarEventsList.prototype.createMenu = function() {
 
   this.menu.on('select', function(e) {
     var event = e.item.event;
-    if (event) new CalendarEventCard(event);
+    if (event) {
+      new CalendarEventCard(event);
+    }
   }.bind(this));
 
   this.menu.on('longSelect', function(e) {
     var event = e.item.event;
-    if (event) new CalendarEventCard(event);
+    if (event) {
+      new CalendarEventCard(event);
+    }
   }.bind(this));
 
   this.menu.show();
@@ -107,7 +111,7 @@ CalendarEventsList.prototype.updateMenu = function() {
       title: dateString,
       items: items
     });
-    i++;
+    i += 1;
   }
 };
 

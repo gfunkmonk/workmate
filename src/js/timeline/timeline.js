@@ -29,7 +29,7 @@ Timeline.emitAction = function(args) {
 
   var callbacks = this._launchCallbacks;
   this._launchCallbacks = [];
-  for (var i = 0, ii = callbacks.length; i < ii; ++i) {
+  for (var i = 0, ii = callbacks.length; i < ii; i += 1) {
     if (callbacks[i](e) === false) {
       return false;
     }

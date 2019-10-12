@@ -19,7 +19,7 @@ var nextId = 1;
 
 var StageElement = function(elementDef) {
   this.state = elementDef || {};
-  this.state.id = nextId++;
+  this.state.id = nextId += 1;
   if (!this.state.position) {
     this.state.position = new Vector2();
   }

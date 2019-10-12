@@ -35,12 +35,16 @@ MailThreadsList.prototype.createMenu = function() {
 
   this.menu.on('select', function(e) {
     var thread = e.item.thread;
-    if (thread) new MailMessagesList(thread, this);
+    if (thread) {
+      new MailMessagesList(thread, this);
+    }
   }.bind(this));
 
   this.menu.on('longSelect', function(e) {
     var thread = e.item.thread;
-    if (thread) new MailActionsList(thread.messages[0], this);
+    if (thread) {
+      new MailActionsList(thread.messages[0], this);
+    }
   }.bind(this));
 
   this.menu.show();
@@ -71,7 +75,7 @@ MailThreadsList.prototype.updateMenu = function() {
 
 MailThreadsList.prototype.updateThread = function(thread) {
   if (this.label.id) {
-    for (var i = 0; i < thread.messages.length; i++) {
+    for (var i = 0; i < thread.messages.length; i += 1) {
       if (thread.messages[i].labelIds.indexOf(this.label.id) !== -1) {
         return;
       }
@@ -82,7 +86,9 @@ MailThreadsList.prototype.updateThread = function(thread) {
     var inAllMail = thread.messages.some(function(message) {
       return (message.labelIds.indexOf('SPAM') === -1) && (message.labelIds.indexOf('TRASH') === -1);
     });
-    if (inAllMail) return;
+    if (inAllMail) {
+      return;
+    }
   }
     
   // Remove thread from the threads list if none of messages contain that label.

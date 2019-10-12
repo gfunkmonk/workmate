@@ -29,7 +29,9 @@ MailLabelsList.prototype.createMenu = function() {
 
   this.menu.on('select', function(e) {
     var label = e.item.label;
-    if (label) new MailThreadsList(label);
+    if (label) {
+      new MailThreadsList(label);
+    }
   }.bind(this));
 
   this.menu.show();

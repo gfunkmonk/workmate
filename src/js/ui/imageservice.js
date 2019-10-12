@@ -41,7 +41,7 @@ var parseImageHash = function(hash) {
   hash = hash[1];
   if (!hash) { return image; }
   var args = hash.split(',');
-  for (var i = 0, ii = args.length; i < ii; ++i) {
+  for (var i = 0, ii = args.length; i < ii; i += 1) {
     var arg = args[i];
     if (arg.match(':')) {
       arg = arg.split(':');
@@ -79,7 +79,7 @@ ImageService.load = function(opt, reset, callback) {
   if (!image || reset === true) {
     fetch = true;
     image = {
-      id: state.nextId++,
+      id: state.nextId += 1,
       url: url,
     };
   }

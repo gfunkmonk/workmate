@@ -3,8 +3,8 @@
   "capabilities": [
     "configurable"
   ],
-  "companyName": "Keanu Lee",
-  "longName": "Workmate",
+  "companyName": "Matt Rinsch",
+  "longName": "Workmate2",
   "resources": {
     "media": [
       {
@@ -72,9 +72,9 @@
   },
   "sdkVersion": "3",
   "shortName": "Workmate",
-  "uuid": "d40e830b-84cc-4a2e-b673-178762b1bc57",
+  "uuid": "d3792124-7062-45a8-990f-a4b894d1e489",
   "versionCode": 1,
-  "versionLabel": "1.1",
+  "versionLabel": "1.2",
   "watchapp": {
     "watchface": false
   }

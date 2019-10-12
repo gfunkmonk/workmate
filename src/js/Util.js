@@ -29,7 +29,7 @@ var Util = {
   
   getMessageHeader: function(message, headerName) {
     var headers = message.payload.headers;
-    for (var i = 0; i < headers.length; i++) {
+    for (var i = 0; i < headers.length; i += 1) {
       if (headers[i].name === headerName) {
         return headers[i].value;
       }
@@ -56,7 +56,9 @@ var Util = {
   // Decodes html text from html entities and tags
   // Credit: https://gist.github.com/CatTail/4174511
   decodeHTML: function(str) {
-    if (!str) return '';
+    if (!str) {
+      return '';
+    }
     return str.replace(/<[^>]*>/g, "").replace(/&#(\d+);/g, function(match, dec) {
       return String.fromCharCode(dec);
     });

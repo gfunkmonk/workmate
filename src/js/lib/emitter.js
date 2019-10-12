@@ -35,7 +35,7 @@ Emitter.prototype._off = function(type, subtype, handler) {
   var handlers = subtypeMap[subtype];
   if (!handlers) { return; }
   var index = -1;
-  for (var i = 0, ii = handlers.length; i < ii; ++i) {
+  for (var i = 0, ii = handlers.length; i < ii; i += 1) {
     if (handlers[i].id === handler) {
       index = i;
       break;
@@ -96,7 +96,7 @@ Emitter.prototype.forEachListener = function(type, subtype, callback) {
   if (typeof callback === 'function') {
     var handlers = this.listeners(type, subtype);
     if (!handlers) { return; }
-    for (var i = 0, ii = handlers.length; i < ii; ++i) {
+    for (var i = 0, ii = handlers.length; i < ii; i += 1) {
       callback.call(this, type, subtype, handlers[i]);
     }
   } else if (typeof subtype === 'function') {
@@ -116,7 +116,7 @@ Emitter.prototype.forEachListener = function(type, subtype, callback) {
 
 var emitToHandlers = function(type, handlers, e) {
   if (!handlers) { return; }
-  for (var i = 0, ii = handlers.length; i < ii; ++i) {
+  for (var i = 0, ii = handlers.length; i < ii; i += 1) {
     var handler = handlers[i].handler;
     if (handler.call(this, e, type, i) === false) {
       return false;

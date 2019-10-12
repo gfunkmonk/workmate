@@ -909,7 +909,7 @@ var toByteArray = function(packet) {
 
   var buffer = packet._view;
   var byteArray = new Array(size);
-  for (var i = 0; i < size; ++i) {
+  for (var i = 0; i < size; i += 1) {
     byteArray[i] = buffer.getUint8(i);
   }
 
@@ -1359,7 +1359,7 @@ SimplyPebble.window = SimplyPebble.stage;
 var toArrayBuffer = function(array, length) {
   length = length || array.length;
   var copy = new DataView(new ArrayBuffer(length));
-  for (var i = 0; i < length; ++i) {
+  for (var i = 0; i < length; i += 1) {
     copy.setUint8(i, array[i]);
   }
   return copy;
@@ -1403,7 +1403,7 @@ SimplyPebble.onAccelData = function(packet) {
   var accels = [];
   AccelData._view = packet._view;
   AccelData._offset = packet._size;
-  for (var i = 0; i < samples; ++i) {
+  for (var i = 0; i < samples; i += 1) {
     accels.push(AccelData.prop());
     AccelData._offset += AccelData._size;
   }
@@ -1412,7 +1412,7 @@ SimplyPebble.onAccelData = function(packet) {
   } else {
     var handlers = accelListeners;
     accelListeners = [];
-    for (var j = 0, jj = handlers.length; j < jj; ++j) {
+    for (var j = 0, jj = handlers.length; j < jj; j += 1) {
       Accel.emitAccelData(accels, handlers[j]);
     }
   }

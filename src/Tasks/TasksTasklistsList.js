@@ -33,7 +33,9 @@ TasksTasklistsList.prototype.createMenu = function() {
 
   this.menu.on('select', function(e) {
     var tasklist = e.item.tasklist;
-    if (tasklist) new TasksTasksList(tasklist);
+    if (tasklist) {
+      new TasksTasksList(tasklist);
+    }
   }.bind(this));
 
   this.menu.show();

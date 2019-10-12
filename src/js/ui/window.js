@@ -57,7 +57,9 @@ var defaults = {
 var nextId = 1;
 
 var checkProps = function(def) {
-  if (!def) return;
+  if (!def) {
+    return;
+  }
   if ('fullscreen' in def && safe.warnFullscreen !== false) {
     safe.warn('`fullscreen` has been deprecated by `status` which allows settings\n\t' +
               'its color and separator in a similar manner to the `action` property.\n\t' +
@@ -69,7 +71,7 @@ var checkProps = function(def) {
 var Window = function(windowDef) {
   checkProps(windowDef);
   this.state = myutil.shadow(defaults, windowDef || {});
-  this.state.id = nextId++;
+  this.state.id = nextId += 1;
   this._buttonInit();
   this._items = [];
   this._dynamic = true;
@@ -193,7 +195,7 @@ Window.prototype._buttonInit = function() {
     config: {},
     configMode: 'auto',
   };
-  for (var i = 0, ii = buttons.length; i < ii; i++) {
+  for (var i = 0, ii = buttons.length; i < ii; i += 1) {
     var button = buttons[i];
     if (button !== 'back') {
       this._button.config[buttons[i]] = true;
@@ -221,7 +223,7 @@ Window.prototype._buttonInit = function() {
 Window.prototype._buttonConfig = function(buttonConf, auto) {
   if (buttonConf === undefined) {
     var config = {};
-    for (var i = 0, ii = buttons.length; i < ii; ++i) {
+    for (var i = 0, ii = buttons.length; i < ii; i += 1) {
       var name = buttons[i];
       config[name] = this._button.config[name];
     }

@@ -26,12 +26,16 @@ var MailMessagesList = function(thread, threadsList) {
   
     this.menu.on('select', function(e) {
       var message = e.item.message;
-      if (message) new MailMessageCard(message, threadsList, this);
+      if (message) {
+        new MailMessageCard(message, threadsList, this);
+      }
     }.bind(this));
       
     this.menu.on('longSelect', function(e) {
       var message = e.item.message;
-      if (message) new MailActionsList(message, threadsList, this);
+      if (message) {
+        new MailActionsList(message, threadsList, this);
+      }
     }.bind(this));
   
     this.menu.show();

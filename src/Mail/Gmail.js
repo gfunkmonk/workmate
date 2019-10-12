@@ -25,7 +25,9 @@ var Gmail = {
           callback(data);
         }.bind(this), function(error) {
           new ErrorCard('Could not get labels list');
-          if (errorCallback) errorCallback();
+          if (errorCallback) {
+            errorCallback();
+          }
         }); 
       }.bind(this), errorCallback);
     }
@@ -36,7 +38,9 @@ var Gmail = {
       GApi.getAccessToken(function(accessToken) {
         var url = 'https://www.googleapis.com/gmail/v1/users/me/threads?maxResults=20&access_token=' +
           encodeURIComponent(accessToken);
-        if (labelId) url += '&labelIds=' + encodeURIComponent(labelId);
+        if (labelId) {
+          url += '&labelIds=' + encodeURIComponent(labelId);
+        }
         
         // TODO: The normal threads.list request only returns IDs and not any user-visible strings,
         // so here we make a threads.get request for each of the returned threads, which is up to
@@ -58,7 +62,7 @@ var Gmail = {
                 url: url,
                 type: 'json'
               }, function(threadData) {
-                for (var i = 0; i < data.threads.length; i++) {
+                for (var i = 0; i < data.threads.length; i += 1) {
                   if (data.threads[i].id === threadData.id) {
                     data.threads[i] = threadData;
                     
@@ -71,7 +75,7 @@ var Gmail = {
                   }
                 }
                 
-                numThreadsToCheck--;
+                numThreadsToCheck -= 1;
                 if (numThreadsToCheck <= 0) {
                   data.threads = data.threads.filter(function(thread) {
                     return !!thread.messages;
@@ -79,7 +83,7 @@ var Gmail = {
                   callback(data);
                 }
               }, function(error) {
-                numThreadsToCheck--;
+                numThreadsToCheck -= 1;
                 if (numThreadsToCheck <= 0) {
                   data.threads = data.threads.filter(function(thread) {
                     return !!thread.messages;
@@ -93,7 +97,9 @@ var Gmail = {
           }
         }, function(error) {
           new ErrorCard('Could not get threads');
-          if (errorCallback) errorCallback();
+          if (errorCallback) {
+            errorCallback();
+          }
         }); 
       }, errorCallback);
     },
@@ -111,7 +117,9 @@ var Gmail = {
           data: options
         }, callback, function(error) {
           new ErrorCard('Could not modify labels');
-          if (errorCallback) errorCallback();
+          if (errorCallback) {
+            errorCallback();
+          }
         }); 
       }, errorCallback);
     }

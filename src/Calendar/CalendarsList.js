@@ -28,7 +28,9 @@ CalendarsList.prototype.createMenu = function() {
 
   this.menu.on('select', function(e) {
     var calendar = e.item.calendar;
-    if (calendar) new CalendarEventsList(calendar);
+    if (calendar) {
+      new CalendarEventsList(calendar);
+    }
   }.bind(this));
 
   this.menu.show();

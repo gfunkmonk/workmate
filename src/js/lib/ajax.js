@@ -7,7 +7,7 @@ var ajax = (function(){
 var formify = function(data) {
   var params = [], i = 0;
   for (var name in data) {
-    params[i++] = encodeURIComponent(name) + '=' + encodeURIComponent(data[name]);
+    params[i += 1] = encodeURIComponent(name) + '=' + encodeURIComponent(data[name]);
   }
   return params.join('&');
 };

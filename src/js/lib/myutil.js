@@ -21,7 +21,7 @@ myutil.defun = function(fn, fargs, fbody) {
 
 myutil.slog = function() {
   var args = [];
-  for (var i = 0, ii = arguments.length; i < ii; ++i) {
+  for (var i = 0, ii = arguments.length; i < ii; i += 1) {
     args[i] = util2.toString(arguments[i]);
   }
   return args.join(' ');
@@ -40,7 +40,7 @@ myutil.flag = function(flags) {
   if (typeof flags === 'boolean') {
     return flags;
   }
-  for (var i = 1, ii = arguments.length; i < ii; ++i) {
+  for (var i = 1, ii = arguments.length; i < ii; i += 1) {
     if (flags[arguments[i]]) {
       return true;
     }

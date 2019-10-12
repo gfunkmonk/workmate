@@ -73,7 +73,7 @@ struct.types.uint64.set = function(offset, value, little) {
 struct.types.cstring.get = function(offset) {
   var chars = [];
   var buffer = this._view;
-  for (var i = offset, ii = buffer.byteLength, j = 0; i < ii && buffer.getUint8(i) !== 0; ++i, ++j) {
+  for (var i = offset, ii = buffer.byteLength, j = 0; i < ii && buffer.getUint8(i) !== 0; i += 1, j += 1) {
     chars[j] = String.fromCharCode(buffer.getUint8(i));
   }
   this._advance = chars.length + 1;
@@ -85,7 +85,7 @@ struct.types.cstring.set = function(offset, value) {
   this._grow(offset + value.length + 1);
   var i = offset;
   var buffer = this._view;
-  for (var j = 0, jj = value.length; j < jj && value[i] !== '\0'; ++i, ++j) {
+  for (var j = 0, jj = value.length; j < jj && value[i] !== '\0'; i += 1, j += 1) {
     buffer.setUint8(i, value.charCodeAt(j));
   }
   buffer.setUint8(i, 0);
@@ -97,7 +97,7 @@ struct.types.data.get = function(offset) {
   this._cursor = offset;
   var buffer = this._view;
   var copy = new DataView(new ArrayBuffer(length));
-  for (var i = 0; i < length; ++i) {
+  for (var i = 0; i < length; i += 1) {
     copy.setUint8(i, buffer.getUint8(i + offset));
   }
   this._advance = length;
@@ -112,7 +112,7 @@ struct.types.data.set = function(offset, value) {
   if (value instanceof ArrayBuffer) {
     value = new DataView(value);
   }
-  for (var i = 0; i < length; ++i) {
+  for (var i = 0; i < length; i += 1) {
     buffer.setUint8(i + offset, value instanceof DataView ? value.getUint8(i) : value[i]);
   }
   this._advance = length;
@@ -124,7 +124,7 @@ struct.prototype._grow = function(target) {
   if (target <= size) { return; }
   while (size < target) { size *= 2; }
   var copy = new DataView(new ArrayBuffer(size));
-  for (var i = 0; i < buffer.byteLength; ++i) {
+  for (var i = 0; i < buffer.byteLength; i += 1) {
     copy.setUint8(i, buffer.getUint8(i));
   }
   this._view = copy;
@@ -181,7 +181,7 @@ struct.prototype._makeAccessors = function(def, index, fields, prefix) {
   index = index || 0;
   this._fields = ( fields = fields || [] );
   var prevField = fields[fields.length];
-  for (var i = 0, ii = def.length; i < ii; ++i) {
+  for (var i = 0, ii = def.length; i < ii; i += 1) {
     var member = def[i];
     var type = member[0];
     if (typeof type === 'string') {
@@ -221,13 +221,13 @@ struct.prototype.prop = function(def) {
   var i = 0, ii = fields.length, name;
   if (arguments.length === 0) {
     var obj = {};
-    for (; i < ii; ++i) {
+    for (; i < ii; i += 1) {
       name = fields[i].name;
       obj[name] = this[name]();
     }
     return obj;
   }
-  for (; i < ii; ++i) {
+  for (; i < ii; i += 1) {
     name = fields[i].name;
     if (name in def) {
       this[name](def[name]);

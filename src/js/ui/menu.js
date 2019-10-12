@@ -184,9 +184,9 @@ Menu.prototype._resolveItem = function(e) {
 Menu.prototype._preloadItems = function(e) {
   var select = util2.copy(e);
   select.itemIndex = Math.max(0, select.itemIndex - Math.floor(this._numPreloadItems / 2));
-  for (var i = 0; i < this._numPreloadItems; ++i) {
+  for (var i = 0; i < this._numPreloadItems; i += 1) {
     this._resolveItem(select);
-    select.itemIndex++;
+    select.itemIndex += 1;
   }
 };
 
@@ -216,7 +216,7 @@ Menu.prototype._emitSelect = function(e) {
           return false;
         }
       }
-      for (var i = 0, ii = handlers.length; i < ii; ++i) {
+      for (var i = 0, ii = handlers.length; i < ii; i += 1) {
         if (handlers[i](e) === false) {
           break;
         }

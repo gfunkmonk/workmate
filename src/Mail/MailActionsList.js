@@ -56,12 +56,16 @@ MailActionsList.prototype.createMenu = function() {
       });
   
       Gmail.Threads.modify(this.message.threadId, options, function(data) {
-        if (this.messagesList) this.messagesList.menu.hide();
-        if (this.messageCard) this.messageCard.card.hide();
+        if (this.messagesList) {
+          this.messagesList.menu.hide();
+        }
+        if (this.messageCard) {
+          this.messageCard.card.hide();
+        }
   
         // Update the labelIds for all the messages in the thread.
         this.message.thread.messages.forEach(function(message) {
-          for (var i = 0; i < data.messages.length; i++) {
+          for (var i = 0; i < data.messages.length; i += 1) {
             if (data.messages[i].id === message.id) {
               message.labelIds = data.messages[i].labelIds;
               break;

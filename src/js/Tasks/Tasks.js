@@ -24,7 +24,9 @@ var Tasks = {
           callback(data);
         }.bind(this), function(error) {
           new ErrorCard('Could not get task lists');
-          if (errorCallback) errorCallback();
+          if (errorCallback) {
+            errorCallback();
+          }
         });
       }.bind(this), errorCallback);
     }
@@ -43,7 +45,9 @@ var Tasks = {
           type: 'json'
         }, callback, function(error) {
           new ErrorCard('Could not get tasks');
-          if (errorCallback) errorCallback();
+          if (errorCallback) {
+            errorCallback();
+          }
         });
       }, errorCallback);
     },
@@ -60,7 +64,9 @@ var Tasks = {
           data: task
         }, callback, function(error) {
           new ErrorCard('Could not update task');
-          if (errorCallback) errorCallback();
+          if (errorCallback) {
+            errorCallback();
+          }
         });
       }, errorCallback);
     },
@@ -75,7 +81,9 @@ var Tasks = {
           method: 'delete'
         }, callback, function(error) {
           new ErrorCard('Could not delete task');
-          if (errorCallback) errorCallback();
+          if (errorCallback) {
+            errorCallback();
+          }
         });
       }, errorCallback);
     }

@@ -32,7 +32,9 @@ var TasksActionsList = function(task, tasksList, taskCard) {
           status: newStatus
         }, function(data) {
           task.status = newStatus;
-          if (taskCard) taskCard.card.hide();
+          if (taskCard) {
+            taskCard.card.hide();
+          }
           tasksList.updateMenu();
           this.menu.hide();
         }.bind(this), function() {
@@ -41,7 +43,9 @@ var TasksActionsList = function(task, tasksList, taskCard) {
         break;
       case 1:
         Tasks.Tasks.delete(task, function(data) {
-          if (taskCard) taskCard.card.hide();
+          if (taskCard) {
+            taskCard.card.hide();
+          }
           tasksList.removeTask(task);
           this.menu.hide();
         }.bind(this), function() {

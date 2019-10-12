@@ -567,7 +567,7 @@
         res.months = other.month() - base.month() +
             (other.year() - base.year()) * 12;
         if (base.clone().add(res.months, 'M').isAfter(other)) {
-            --res.months;
+            res.months -= 1;
         }
 
         res.milliseconds = +other - +(base.clone().add(res.months, 'M'));
@@ -642,10 +642,10 @@
             lengthDiff = Math.abs(array1.length - array2.length),
             diffs = 0,
             i;
-        for (i = 0; i < len; i++) {
+        for (i = 0; i < len; i += 1) {
             if ((dontConvert && array1[i] !== array2[i]) ||
                 (!dontConvert && toInt(array1[i]) !== toInt(array2[i]))) {
-                diffs++;
+                diffs += 1;
             }
         }
         return diffs + lengthDiff;
@@ -710,7 +710,7 @@
                 return getter(index);
             }
             else {
-                for (i = 0; i < count; i++) {
+                for (i = 0; i < count; i += 1) {
                     results.push(getter(i));
                 }
                 return results;
@@ -816,9 +816,9 @@
                     //the next array item is better than a shallower substring of this one
                     break;
                 }
-                j--;
+                j -= 1;
             }
-            i++;
+            i += 1;
         }
         return null;
     }
@@ -894,7 +894,7 @@
                 this._shortMonthsParse = [];
             }
 
-            for (i = 0; i < 12; i++) {
+            for (i = 0; i < 12; i += 1) {
                 // make the regex if we don't have it already
                 mom = moment.utc([2000, i]);
                 if (strict && !this._longMonthsParse[i]) {
@@ -938,7 +938,7 @@
                 this._weekdaysParse = [];
             }
 
-            for (i = 0; i < 7; i++) {
+            for (i = 0; i < 7; i += 1) {
                 // make the regex if we don't have it already
                 if (!this._weekdaysParse[i]) {
                     mom = moment([2000, 1]).day(i);
@@ -1080,7 +1080,7 @@
     function makeFormatFunction(format) {
         var array = format.match(formattingTokens), i, length;
 
-        for (i = 0, length = array.length; i < length; i++) {
+        for (i = 0, length = array.length; i < length; i += 1) {
             if (formatTokenFunctions[array[i]]) {
                 array[i] = formatTokenFunctions[array[i]];
             } else {
@@ -1090,7 +1090,7 @@
 
         return function (mom) {
             var output = '';
-            for (i = 0; i < length; i++) {
+            for (i = 0; i < length; i += 1) {
                 output += array[i] instanceof Function ? array[i].call(mom, format) : array[i];
             }
             return output;
@@ -1347,7 +1347,7 @@
             // if we didn't get a weekday name, mark the date as invalid
             if (a != null) {
                 config._w = config._w || {};
-                config._w['d'] = a;
+                config._w.d = a;
             } else {
                 config._pf.invalidWeekday = input;
             }
@@ -1404,7 +1404,7 @@
                 // weekday -- low day numbers are considered next week
                 weekday = w.d;
                 if (weekday < dow) {
-                    ++week;
+                    week += 1;
                 }
             } else if (w.e != null) {
                 // local weekday -- counting starts from begining of week
@@ -1456,12 +1456,12 @@
         // * if day of month is given, default month and year
         // * if month is given, default only year
         // * if year is given, don't default anything
-        for (i = 0; i < 3 && config._a[i] == null; ++i) {
+        for (i = 0; i < 3 && config._a[i] == null; i += 1) {
             config._a[i] = input[i] = currentDate[i];
         }
 
         // Zero out whatever was not defaulted, including time
-        for (; i < 7; i++) {
+        for (; i < 7; i += 1) {
             config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
         }
 
@@ -1538,7 +1538,7 @@
 
         tokens = expandFormat(config._f, config._locale).match(formattingTokens) || [];
 
-        for (i = 0; i < tokens.length; i++) {
+        for (i = 0; i < tokens.length; i += 1) {
             token = tokens[i];
             parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
             if (parsedInput) {
@@ -1607,7 +1607,7 @@
             return;
         }
 
-        for (i = 0; i < config._f.length; i++) {
+        for (i = 0; i < config._f.length; i += 1) {
             currentScore = 0;
             tempConfig = copyConfig({}, config);
             if (config._useUTC != null) {
@@ -1646,14 +1646,14 @@
 
         if (match) {
             config._pf.iso = true;
-            for (i = 0, l = isoDates.length; i < l; i++) {
+            for (i = 0, l = isoDates.length; i < l; i += 1) {
                 if (isoDates[i][1].exec(string)) {
                     // match[5] should be 'T' or undefined
                     config._f = isoDates[i][0] + (match[6] || ' ');
                     break;
                 }
             }
-            for (i = 0, l = isoTimes.length; i < l; i++) {
+            for (i = 0, l = isoTimes.length; i < l; i += 1) {
                 if (isoTimes[i][1].exec(string)) {
                     config._f += isoTimes[i][0];
                     break;
@@ -1679,7 +1679,7 @@
 
     function map(arr, fn) {
         var res = [], i;
-        for (i = 0; i < arr.length; ++i) {
+        for (i = 0; i < arr.length; i += 1) {
             res.push(fn(arr[i], i));
         }
         return res;
@@ -1918,7 +1918,7 @@
             return moment();
         }
         res = moments[0];
-        for (i = 1; i < moments.length; ++i) {
+        for (i = 1; i < moments.length; i += 1) {
             if (moments[i][fn](res)) {
                 res = moments[i];
             }
@@ -2156,7 +2156,7 @@
         return obj instanceof Duration;
     };
 
-    for (i = lists.length - 1; i >= 0; --i) {
+    for (i = lists.length - 1; i >= 0; i -= 1) {
         makeList(lists[i]);
     }
 

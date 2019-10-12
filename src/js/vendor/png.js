@@ -39,7 +39,7 @@ if (typeof require !== 'undefined') {
       if (typeof canvas === 'function') {
         callback = canvas;
       }
-      xhr = new XMLHttpRequest;
+      xhr = new XMLHttpRequest();
       xhr.open("GET", url, true);
       xhr.responseType = "arraybuffer";
       xhr.onload = function() {
@@ -79,8 +79,8 @@ if (typeof require !== 'undefined') {
         section = ((function() {
           var _i, _results;
           _results = [];
-          for (i = _i = 0; _i < 4; i = ++_i) {
-            _results.push(String.fromCharCode(this.data[this.pos++]));
+          for (i = _i = 0; _i < 4; i = _i += 1) {
+            _results.push(String.fromCharCode(this.data[this.pos += 1]));
           }
           return _results;
         }).call(this)).join('');
@@ -88,11 +88,11 @@ if (typeof require !== 'undefined') {
           case 'IHDR':
             this.width = this.readUInt32();
             this.height = this.readUInt32();
-            this.bits = this.data[this.pos++];
-            this.colorType = this.data[this.pos++];
-            this.compressionMethod = this.data[this.pos++];
-            this.filterMethod = this.data[this.pos++];
-            this.interlaceMethod = this.data[this.pos++];
+            this.bits = this.data[this.pos += 1];
+            this.colorType = this.data[this.pos += 1];
+            this.compressionMethod = this.data[this.pos += 1];
+            this.filterMethod = this.data[this.pos += 1];
+            this.interlaceMethod = this.data[this.pos += 1];
             break;
           case 'acTL':
             this.animation = {
@@ -118,8 +118,8 @@ if (typeof require !== 'undefined') {
             delayNum = this.readUInt16();
             delayDen = this.readUInt16() || 100;
             frame.delay = 1000 * delayNum / delayDen;
-            frame.disposeOp = this.data[this.pos++];
-            frame.blendOp = this.data[this.pos++];
+            frame.disposeOp = this.data[this.pos += 1];
+            frame.blendOp = this.data[this.pos += 1];
             frame.data = [];
             break;
           case 'IDAT':
@@ -129,8 +129,8 @@ if (typeof require !== 'undefined') {
               chunkSize -= 4;
             }
             data = (frame != null ? frame.data : void 0) || this.imgData;
-            for (i = _i = 0; 0 <= chunkSize ? _i < chunkSize : _i > chunkSize; i = 0 <= chunkSize ? ++_i : --_i) {
-              data.push(this.data[this.pos++]);
+            for (i = _i = 0; 0 <= chunkSize ? _i < chunkSize : _i > chunkSize; i = 0 <= chunkSize ? _i += 1 : _i -= 1) {
+              data.push(this.data[this.pos += 1]);
             }
             break;
           case 'tRNS':
@@ -140,7 +140,7 @@ if (typeof require !== 'undefined') {
                 this.transparency.indexed = this.read(chunkSize);
                 short = 255 - this.transparency.indexed.length;
                 if (short > 0) {
-                  for (i = _j = 0; 0 <= short ? _j < short : _j > short; i = 0 <= short ? ++_j : --_j) {
+                  for (i = _j = 0; 0 <= short ? _j < short : _j > short; i = 0 <= short ? _j += 1 : _j -= 1) {
                     this.transparency.indexed.push(255);
                   }
                 }
@@ -200,25 +200,25 @@ if (typeof require !== 'undefined') {
     PNG.prototype.read = function(bytes) {
       var i, _i, _results;
       _results = [];
-      for (i = _i = 0; 0 <= bytes ? _i < bytes : _i > bytes; i = 0 <= bytes ? ++_i : --_i) {
-        _results.push(this.data[this.pos++]);
+      for (i = _i = 0; 0 <= bytes ? _i < bytes : _i > bytes; i = 0 <= bytes ? _i += 1 : _i -= 1) {
+        _results.push(this.data[this.pos += 1]);
       }
       return _results;
     };
 
     PNG.prototype.readUInt32 = function() {
       var b1, b2, b3, b4;
-      b1 = this.data[this.pos++] << 24;
-      b2 = this.data[this.pos++] << 16;
-      b3 = this.data[this.pos++] << 8;
-      b4 = this.data[this.pos++];
+      b1 = this.data[this.pos += 1] << 24;
+      b2 = this.data[this.pos += 1] << 16;
+      b3 = this.data[this.pos += 1] << 8;
+      b4 = this.data[this.pos += 1];
       return b1 | b2 | b3 | b4;
     };
 
     PNG.prototype.readUInt16 = function() {
       var b1, b2;
-      b1 = this.data[this.pos++] << 8;
-      b2 = this.data[this.pos++];
+      b1 = this.data[this.pos += 1] << 8;
+      b2 = this.data[this.pos += 1];
       return b1 | b2;
     };
 
@@ -240,39 +240,39 @@ if (typeof require !== 'undefined') {
       pos = 0;
       c = 0;
       while (pos < length) {
-        switch (data[pos++]) {
+        switch (data[pos += 1]) {
           case 0:
             for (i = _i = 0; _i < scanlineLength; i = _i += 1) {
-              pixels[c++] = data[pos++];
+              pixels[c += 1] = data[pos += 1];
             }
             break;
           case 1:
             for (i = _j = 0; _j < scanlineLength; i = _j += 1) {
-              byte = data[pos++];
+              byte = data[pos += 1];
               left = i < pixelBytes ? 0 : pixels[c - pixelBytes];
-              pixels[c++] = (byte + left) % 256;
+              pixels[c += 1] = (byte + left) % 256;
             }
             break;
           case 2:
             for (i = _k = 0; _k < scanlineLength; i = _k += 1) {
-              byte = data[pos++];
+              byte = data[pos += 1];
               col = (i - (i % pixelBytes)) / pixelBytes;
               upper = row && pixels[(row - 1) * scanlineLength + col * pixelBytes + (i % pixelBytes)];
-              pixels[c++] = (upper + byte) % 256;
+              pixels[c += 1] = (upper + byte) % 256;
             }
             break;
           case 3:
             for (i = _l = 0; _l < scanlineLength; i = _l += 1) {
-              byte = data[pos++];
+              byte = data[pos += 1];
               col = (i - (i % pixelBytes)) / pixelBytes;
               left = i < pixelBytes ? 0 : pixels[c - pixelBytes];
               upper = row && pixels[(row - 1) * scanlineLength + col * pixelBytes + (i % pixelBytes)];
-              pixels[c++] = (byte + Math.floor((left + upper) / 2)) % 256;
+              pixels[c += 1] = (byte + Math.floor((left + upper) / 2)) % 256;
             }
             break;
           case 4:
             for (i = _m = 0; _m < scanlineLength; i = _m += 1) {
-              byte = data[pos++];
+              byte = data[pos += 1];
               col = (i - (i % pixelBytes)) / pixelBytes;
               left = i < pixelBytes ? 0 : pixels[c - pixelBytes];
               if (row === 0) {
@@ -292,13 +292,13 @@ if (typeof require !== 'undefined') {
               } else {
                 paeth = upperLeft;
               }
-              pixels[c++] = (byte + paeth) % 256;
+              pixels[c += 1] = (byte + paeth) % 256;
             }
             break;
           default:
             throw new Error("Invalid filter algorithm: " + data[pos - 1]);
         }
-        row++;
+        row += 1;
       }
       return pixels;
     };
@@ -312,10 +312,10 @@ if (typeof require !== 'undefined') {
       length = palette.length;
       c = 0;
       for (i = _i = 0, _ref = palette.length; _i < _ref; i = _i += 3) {
-        ret[pos++] = palette[i];
-        ret[pos++] = palette[i + 1];
-        ret[pos++] = palette[i + 2];
-        ret[pos++] = (_ref1 = transparency[c++]) != null ? _ref1 : 255;
+        ret[pos += 1] = palette[i];
+        ret[pos += 1] = palette[i + 1];
+        ret[pos += 1] = palette[i + 2];
+        ret[pos += 1] = (_ref1 = transparency[c += 1]) != null ? _ref1 : 255;
       }
       return ret;
     };
@@ -337,20 +337,20 @@ if (typeof require !== 'undefined') {
       if (colors === 1) {
         while (i < length) {
           k = palette ? pixels[i / 4] * 4 : j;
-          v = input[k++];
-          data[i++] = v;
-          data[i++] = v;
-          data[i++] = v;
-          data[i++] = alpha ? input[k++] : 255;
+          v = input[k += 1];
+          data[i += 1] = v;
+          data[i += 1] = v;
+          data[i += 1] = v;
+          data[i += 1] = alpha ? input[k += 1] : 255;
           j = k;
         }
       } else {
         while (i < length) {
           k = palette ? pixels[i / 4] * 4 : j;
-          data[i++] = input[k++];
-          data[i++] = input[k++];
-          data[i++] = input[k++];
-          data[i++] = alpha ? input[k++] : 255;
+          data[i += 1] = input[k += 1];
+          data[i += 1] = input[k += 1];
+          data[i += 1] = input[k += 1];
+          data[i += 1] = alpha ? input[k += 1] : 255;
           j = k;
         }
       }
@@ -369,7 +369,7 @@ if (typeof require !== 'undefined') {
       scratchCtx.height = imageData.height;
       scratchCtx.clearRect(0, 0, imageData.width, imageData.height);
       scratchCtx.putImageData(imageData, 0, 0);
-      img = new Image;
+      img = new Image();
       img.src = scratchCanvas.toDataURL();
       return img;
     };
@@ -381,7 +381,7 @@ if (typeof require !== 'undefined') {
       }
       _ref = this.animation.frames;
       _results = [];
-      for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+      for (i = _i = 0, _len = _ref.length; _i < _len; i = _i += 1) {
         frame = _ref[i];
         imageData = ctx.createImageData(frame.width, frame.height);
         pixels = this.decodePixels(new Uint8Array(frame.data));
@@ -418,7 +418,7 @@ if (typeof require !== 'undefined') {
       _ref = this.animation, numFrames = _ref.numFrames, frames = _ref.frames, numPlays = _ref.numPlays;
       return (doFrame = function() {
         var f, frame;
-        f = frameNumber++ % numFrames;
+        f = (frameNumber += 1) % numFrames;
         frame = frames[f];
         _this.renderFrame(ctx, f);
         if (numFrames > 1 && frameNumber / numFrames < numPlays) {

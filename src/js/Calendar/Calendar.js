@@ -24,7 +24,9 @@ var Calendar = {
           callback(data);
         }.bind(this), function(error) {
           new ErrorCard('Could not get calendars list');
-          if (errorCallback) errorCallback();
+          if (errorCallback) {
+            errorCallback();
+          }
         }); 
       }.bind(this), errorCallback);
     }
@@ -45,7 +47,9 @@ var Calendar = {
           type: 'json'
         }, callback, function(error) {
           new ErrorCard('Could not get calendar events');
-          if (errorCallback) errorCallback();
+          if (errorCallback) {
+            errorCallback();
+          }
         });
       }, errorCallback);
     }

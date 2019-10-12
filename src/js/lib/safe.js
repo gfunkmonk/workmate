@@ -30,7 +30,7 @@ var makeTranslateStack = function(stackLineRegExp, translateLine) {
   return function(stack, level) {
     var lines = stack.split('\n');
     var firstStackLine = -1;
-    for (var i = lines.length - 1; i >= 0; --i) {
+    for (var i = lines.length - 1; i >= 0; i -= 1) {
       var m = lines[i].match(stackLineRegExp);
       if (!m) {
         continue;
@@ -103,7 +103,7 @@ var normalizeIndent = function(lines, pos) {
   var label = lines[pos].match(/^[^\s]* /);
   if (label) {
     var indent = label[0].replace(/./g, ' ');
-    for (var i = pos + 1, ii = lines.length; i < ii; i++) {
+    for (var i = pos + 1, ii = lines.length; i < ii; i += 1) {
       lines[i] = lines[i].replace(/^\t/, indent);
     }
   }

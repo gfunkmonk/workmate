@@ -15,9 +15,9 @@ var getPixelGrey = function(pixels, pos) {
 
 //! Convert an RGB pixel array into a single uint8 2 bitdepth per channel color
 var getPixelColorUint8 = function(pixels, pos) {
-  var r = Math.min(Math.max(parseInt(pixels[pos    ] / 64 + 0.5), 0), 3);
-  var g = Math.min(Math.max(parseInt(pixels[pos + 1] / 64 + 0.5), 0), 3);
-  var b = Math.min(Math.max(parseInt(pixels[pos + 2] / 64 + 0.5), 0), 3);
+  var r = Math.min(Math.max(parseInt(pixels[pos    ] / 64 + 0.5, 10), 0), 3);
+  var g = Math.min(Math.max(parseInt(pixels[pos + 1] / 64 + 0.5, 10), 0), 3);
+  var b = Math.min(Math.max(parseInt(pixels[pos + 2] / 64 + 0.5, 10), 0), 3);
   return (0x3 << 6) | (r << 4) | (g << 2) | b;
 };
 
@@ -29,11 +29,11 @@ var getPixelColorRGB8 = function(pixels, pos) {
 //! Normalize the color channels to be identical
 image.greyscale = function(pixels, width, height, converter) {
   converter = converter || getPixelGrey;
-  for (var y = 0, yy = height; y < yy; ++y) {
-    for (var x = 0, xx = width; x < xx; ++x) {
+  for (var y = 0, yy = height; y < yy; y += 1) {
+    for (var x = 0, xx = width; x < xx; x += 1) {
       var pos = getPos(width, x, y);
       var newColor = converter(pixels, pos);
-      for (var i = 0; i < 3; ++i) {
+      for (var i = 0; i < 3; i += 1) {
         pixels[pos + i] = newColor;
       }
     }
@@ -44,9 +44,9 @@ image.greyscale = function(pixels, width, height, converter) {
 image.toRaster = function(pixels, width, height, converter) {
   converter = converter || getPixelColorRGB8;
   var matrix = [];
-  for (var y = 0, yy = height; y < yy; ++y) {
+  for (var y = 0, yy = height; y < yy; y += 1) {
     var row = matrix[y] = [];
-    for (var x = 0, xx = width; x < xx; ++x) {
+    for (var x = 0, xx = width; x < xx; x += 1) {
       var pos = getPos(width, x, y);
       row[x] = converter(pixels, pos);
     }
@@ -97,26 +97,26 @@ var getChannelGrey = function(color) {
 
 //! Get the nearest normalized 2 bitdepth color
 var getChannel2 = function(color) {
-  return Math.min(Math.max(parseInt(color / 64 + 0.5), 0) * 64, 255);
+  return Math.min(Math.max(parseInt(color / 64 + 0.5, 10), 0) * 64, 255);
 };
 
 image.dither = function(pixels, width, height, dithers, converter) {
   converter = converter || getChannel2;
   dithers = dithers || image.dithers['default'];
   var numDithers = dithers.length;
-  for (var y = 0, yy = height; y < yy; ++y) {
-    for (var x = 0, xx = width; x < xx; ++x) {
+  for (var y = 0, yy = height; y < yy; y += 1) {
+    for (var x = 0, xx = width; x < xx; x += 1) {
       var pos = getPos(width, x, y);
-      for (var i = 0; i < 3; ++i) {
+      for (var i = 0; i < 3; i += 1) {
         var oldColor = pixels[pos + i];
         var newColor = converter(oldColor);
         var error = oldColor - newColor;
         pixels[pos + i] = newColor;
-        for (var j = 0; j < numDithers; ++j) {
+        for (var j = 0; j < numDithers; j += 1) {
           var dither = dithers[j];
           var x2 = x + dither[0], y2 = y + dither[1];
           if (x2 >= 0 && x2 < width && y < height) {
-            pixels[getPos(width, x2, y2) + i] += parseInt(error * dither[2]);
+            pixels[getPos(width, x2, y2) + i] += parseInt(error * dither[2], 10);
           }
         }
       }
@@ -136,13 +136,13 @@ image.resizeNearest = function(pixels, width, height, newWidth, newHeight) {
   var newPixels = new Array(newWidth * newHeight * 4);
   var widthRatio = width / newWidth;
   var heightRatio = height / newHeight;
-  for (var y = 0, yy = newHeight; y < yy; ++y) {
-    for (var x = 0, xx = newWidth; x < xx; ++x) {
-      var x2 = parseInt(x * widthRatio);
-      var y2 = parseInt(y * heightRatio);
+  for (var y = 0, yy = newHeight; y < yy; y += 1) {
+    for (var x = 0, xx = newWidth; x < xx; x += 1) {
+      var x2 = parseInt(x * widthRatio, 10);
+      var y2 = parseInt(y * heightRatio, 10);
       var pos2 = getPos(width, x2, y2);
       var pos = getPos(newWidth, x, y);
-      for (var i = 0; i < 4; ++i) {
+      for (var i = 0; i < 4; i += 1) {
         newPixels[pos + i] = pixels[pos2 + i];
       }
     }
@@ -154,12 +154,12 @@ image.resizeSample = function(pixels, width, height, newWidth, newHeight) {
   var newPixels = new Array(newWidth * newHeight * 4);
   var widthRatio = width / newWidth;
   var heightRatio = height / newHeight;
-  for (var y = 0, yy = newHeight; y < yy; ++y) {
-    for (var x = 0, xx = newWidth; x < xx; ++x) {
-      var x2 = Math.min(parseInt(x * widthRatio), width - 1);
-      var y2 = Math.min(parseInt(y * heightRatio), height - 1);
+  for (var y = 0, yy = newHeight; y < yy; y += 1) {
+    for (var x = 0, xx = newWidth; x < xx; x += 1) {
+      var x2 = Math.min(parseInt(x * widthRatio, 10), width - 1);
+      var y2 = Math.min(parseInt(y * heightRatio, 10), height - 1);
       var pos = getPos(newWidth, x, y);
-      for (var i = 0; i < 4; ++i) {
+      for (var i = 0; i < 4; i += 1) {
         newPixels[pos + i] = ((pixels[getPos(width, x2  , y2  ) + i] +
                                pixels[getPos(width, x2+1, y2  ) + i] +
                                pixels[getPos(width, x2  , y2+1) + i] +
@@ -193,20 +193,20 @@ image.toGbitmap1 = function(pixels, width, height) {
 
   var gpixels = [];
   var growBytes = Math.ceil(width / 32) * 4;
-  for (var i = 0, ii = height * growBytes; i < ii; ++i) {
+  for (var i = 0, ii = height * growBytes; i < ii; i += 1) {
     gpixels[i] = 0;
   }
 
-  for (var y = 0, yy = height; y < yy; ++y) {
-    for (var x = 0, xx = width; x < xx; ++x) {
+  for (var y = 0, yy = height; y < yy; y += 1) {
+    for (var x = 0, xx = width; x < xx; x += 1) {
       var grey = 0;
       var pos = getPos(width, x, y);
-      for (var j = 0; j < 3; ++j) {
+      for (var j = 0; j < 3; j += 1) {
         grey += pixels[pos + j];
       }
       grey /= 3 * 255;
       if (grey >= 0.5) {
-        var gbytePos = y * growBytes + parseInt(x / 8);
+        var gbytePos = y * growBytes + parseInt(x / 8, 10);
         gpixels[gbytePos] += 1 << (x % 8);
       }
     }
@@ -229,14 +229,14 @@ image.toPng8 = function(pixels, width, height) {
   var palette = [];
   var colorMap = {};
   var numColors = 0;
-  for (var y = 0, yy = height; y < yy; ++y) {
+  for (var y = 0, yy = height; y < yy; y += 1) {
     var row = raster[y];
-    for (var x = 0, xx = width; x < xx; ++x) {
+    for (var x = 0, xx = width; x < xx; x += 1) {
       var color = row[x];
       var hash = getPixelColorUint8(color, 0);
       if (!(hash in colorMap)) {
         colorMap[hash] = numColors;
-        palette[numColors++] = color;
+        palette[numColors += 1] = color;
       }
      row[x] = colorMap[hash];
     }
@@ -262,11 +262,11 @@ image.setSizeAspect = function(img, width, height) {
   img.originalHeight = height;
   if (img.width) {
     if (!img.height) {
-      img.height = parseInt(height * (img.width / width));
+      img.height = parseInt(height * (img.width / width), 10);
     }
   } else if (img.height) {
     if (!img.width) {
-      img.width = parseInt(width * (img.height / height));
+      img.width = parseInt(width * (img.height / height), 10);
     }
   } else {
     img.width = width;

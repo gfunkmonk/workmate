@@ -17,7 +17,7 @@ png.Bytes = function(data, optional) {
   if (!optional) {
 
     if (data instanceof Array || data instanceof Uint8Array) {
-      for (i = 0; i < data.length; i++) {
+      for (i = 0; i < data.length; i += 1) {
         datum = data[i];
         if (datum !== null) { // nulls and undefineds are silently skipped.
           if (typeof datum !== "number") {
@@ -33,7 +33,7 @@ png.Bytes = function(data, optional) {
     }
 
     else if (typeof data == "string") {
-      for (i = 0; i < data.length; i++) {
+      for (i = 0; i < data.length; i += 1) {
         datum = data.charCodeAt(i);
         if (datum < 0 || datum > 255) {
           throw new Error("Characters above 255 not allowed without explicit encoding: "+datum);
@@ -71,9 +71,9 @@ png.Bytes = function(data, optional) {
         (data & 0x0000FF00) >>> 8,
         (data & 0x000000FF)
       ].slice(-optional.bytes);
+    } else {
+      throw new Error("Unexpected data/optional args combination: "+data);
     }
-
-    else throw new Error("Unexpected data/optional args combination: "+data);
 
   }
 };
@@ -105,10 +105,10 @@ png.Bytes.prototype.toString = function(n) {
   var lines = [];
   var hex;
   var chr;
-  for (var i = 0; i < chunks.length; i++) {
+  for (var i = 0; i < chunks.length; i += 1) {
     hex = [];
     chr = [];
-    for (var j = 0; j < chunks[i].length; j++) {
+    for (var j = 0; j < chunks[i].length; j += 1) {
       byte = chunks[i][j];
       hex.push(
         ((byte < 16) ? "0" : "") +
@@ -180,9 +180,9 @@ png.Chunk = function(type, data) {
   // http://www.libpng.org/pub/png/spec/1.0/PNG-CRCAppendix.html
   if (!png.crc_table) {
     png.crc_table = []; // Table of CRCs of all 8-bit messages.
-    for (var n = 0; n < 256; n++) {
+    for (var n = 0; n < 256; n += 1) {
       var c = n;
-      for (var k = 0; k < 8; k++) {
+      for (var k = 0; k < 8; k += 1) {
         if (c & 1) {
           c = 0xedb88320 ^ (c >>> 1); // C ">>" is JS ">>>"
         } else {
@@ -199,7 +199,7 @@ png.Chunk = function(type, data) {
     // is the 1's complement of the final running CRC
     var c = crc;
     var n;
-    for (n = 0; n < buffer.length; n++) {
+    for (n = 0; n < buffer.length; n += 1) {
       c = png.crc_table[(c ^ buffer[n]) & 0xff] ^ (c >>> 8); // C ">>" is JS ">>>"
     }
     return c;
@@ -220,15 +220,14 @@ png.Chunk = function(type, data) {
 png.Chunk.IHDR = function(width, height, bit_depth, color_type) {
   if (!(
         // grayscale
-        (color_type === 0) && (bit_depth in {1:1, 2:1, 4:1, 8:1, 16:1}) ||
+        ((color_type === 0) && (bit_depth in {1:1, 2:1, 4:1, 8:1, 16:1}) ||
         // rgb
         (color_type === 2) && (bit_depth in {8:1, 16:1}) ||
         // palette
         (color_type === 3) && (bit_depth in {1:1, 2:1, 4:1, 8:1}) ||
         // grayscale + alpha
-        (color_type === 4) && (bit_depth in {8:1, 16:1}) ||
-        // rgb + alpha
-        (color_type ===  6) && (bit_depth in {8:1, 16:1})
+        (color_type === 4) && (bit_depth in {8:1, 16:1}) || // rgb + alpha
+        (color_type ===  6) && (bit_depth in {8:1, 16:1}))
         // http://www.libpng.org/pub/png/spec/1.0/PNG-Chunks.html#C.IHDR
         )) {
     throw new Error("Invalid color type ("+color_type+") / bit depth ("+bit_depth+") combo");
@@ -250,7 +249,7 @@ png.Chunk.IHDR = function(width, height, bit_depth, color_type) {
 png.Chunk.PLTE = function(rgb_list) {
   // given a list of RGB triples,
   // returns the corresponding PNG PLTE (palette) chunk.
-  for (var i = 0, ii = rgb_list.length; i < ii; i++) {
+  for (var i = 0, ii = rgb_list.length; i < ii; i += 1) {
     var triple = rgb_list[i];
     if (triple.length !== 3) {
       throw new Error("This is not a valid RGB triple: "+triple);
@@ -276,8 +275,12 @@ png.Raster = function(bit_depth, color_type, raster) {
   // provides encode(), which returns bytes ready for a PNG IDAT chunk.
 
   // validate depth and type
-  if (color_type !== 0 && color_type !== 3) throw new Error("Color type "+color_type+" is unsupported.");
-  if (bit_depth > 8) throw new Error("Bit depths greater than 8 are unsupported.");
+  if (color_type !== 0 && color_type !== 3) {
+    throw new Error("Color type "+color_type+" is unsupported.");
+  }
+  if (bit_depth > 8) {
+    throw new Error("Bit depths greater than 8 are unsupported.");
+  }
 
   this.bit_depth = bit_depth;
   this.color_type = color_type;
@@ -285,12 +288,14 @@ png.Raster = function(bit_depth, color_type, raster) {
   // validate raster data.
   var max_value = (1 << bit_depth) - 1;
   var cols = raster[0].length;
-  for (var row = 0; row < raster.length; row++) {
-    if (raster[row].length != cols)
+  for (var row = 0; row < raster.length; row += 1) {
+    if (raster[row].length != cols) {
       throw new Error("Row "+row+" does not have the expected "+cols+" columns.");
-    for (var col = 0; col < cols; col++) {
-      if (!(raster[row][col] >= 0 && raster[row][col] <= max_value))
+    }
+    for (var col = 0; col < cols; col += 1) {
+      if (!(raster[row][col] >= 0 && raster[row][col] <= max_value)) {
         throw new Error("Image data ("+raster[row][col]+") out of bounds at ("+row+","+col+")");
+      }
     }
   }
 
@@ -300,17 +305,19 @@ png.Raster = function(bit_depth, color_type, raster) {
   this.encode = function() {
     // Returns the image data as a single array of bytes, using filter method 0.
     var buffer = [];
-    for (var row = 0; row < raster.length; row++) {
+    for (var row = 0; row < raster.length; row += 1) {
       buffer.push(0); // each row gets filter type 0.
       for (var col = 0; col < cols; col += 8/bit_depth) {
         var byte = 0;
-        for (var sub = 0; sub < 8/bit_depth; sub++) {
+        for (var sub = 0; sub < 8/bit_depth; sub += 1) {
           byte <<= bit_depth;
           if (col + sub < cols) {
             byte |= raster[row][col+sub];
           }
         }
-        if (byte & ~0xFF) throw new Error("Encoded raster byte out of bounds at ("+row+","+col+")");
+        if (byte & ~0xFF) {
+          throw new Error("Encoded raster byte out of bounds at ("+row+","+col+")");
+        }
         buffer.push(byte);
       }
     }
@@ -323,24 +330,28 @@ png.Raster_rgb = function(bit_depth, color_type, raster) {
   // provides encode(), which returns bytes ready for a PNG IDAT chunk.
 
   // validate depth and type
-  if (color_type != 2 && color_type != 6) throw new Error("Only color types 2 and 6 for RGB.");
-  if (bit_depth != 8) throw new Error("Bit depths other than 8 are unsupported for RGB.");
+  if (color_type != 2 && color_type != 6) {
+    throw new Error("Only color types 2 and 6 for RGB.");
+  }
+  if (bit_depth != 8) {
+    throw new Error("Bit depths other than 8 are unsupported for RGB.");
+  }
 
   this.bit_depth = bit_depth;
   this.color_type = color_type;
 
   // validate raster data.
   var cols = raster[0].length;
-  for (var row = 0; row < raster.length; row++) {
+  for (var row = 0; row < raster.length; row += 1) {
     if (raster[row].length != cols) {
       throw new Error("Row "+row+" does not have the expected "+cols+" columns.");
     }
-    for (var col = 0; col < cols; col++) {
+    for (var col = 0; col < cols; col += 1) {
       if (!(color_type == 2 && raster[row][col].length == 3) &&
           !(color_type == 6 && raster[row][col].length == 4)) {
         throw new Error("Not RGB[A] at ("+row+","+col+")");
       }
-      for (var i = 0; i < (color_type == 2 ? 3 : 4); i++) {
+      for (var i = 0; i < (color_type == 2 ? 3 : 4); i += 1) {
         if (raster[row][col][i]<0 || raster[row][col][i]>255) {
           throw new Error("RGB out of range at ("+row+","+col+")");
         }
@@ -354,9 +365,9 @@ png.Raster_rgb = function(bit_depth, color_type, raster) {
   this.encode = function() {
     // Returns the image data as a single array of bytes, using filter method 0.
     var buffer = [];
-    for (var row = 0; row < raster.length; row++) {
+    for (var row = 0; row < raster.length; row += 1) {
       buffer.push(0); // each row gets filter type 0.
-      for (var col = 0; col < cols; col++) {
+      for (var col = 0; col < cols; col += 1) {
         buffer.push.apply(buffer, raster[row][col]);
       }
     }

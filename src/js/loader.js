@@ -72,7 +72,7 @@ loader.getPackage = function(path, requirer) {
   }
 
   var paths = loader.paths;
-  for (var i = 0, ii = paths.length; !module && i < ii; ++i) {
+  for (var i = 0, ii = paths.length; !module && i < ii; i += 1) {
     var dirpath = paths[i];
     module = loader.getPackageAtPath(dirpath + '/' + path);
   }
@@ -84,7 +84,7 @@ loader.getPackageAtPath = function(path) {
 
   var module;
   var extpaths = loader.extpaths;
-  for (var i = 0, ii = extpaths.length; !module && i < ii; ++i) {
+  for (var i = 0, ii = extpaths.length; !module && i < ii; i += 1) {
     var filepath = extpaths[i].replace('?', path);
     module = loader.packages[filepath];
   }
@@ -94,7 +94,7 @@ loader.getPackageAtPath = function(path) {
 loader.getPackageByLineno = function(lineno) {
   var packages = loader.packagesLinenoOrder;
   var module;
-  for (var i = 0, ii = packages.length; i < ii; ++i) {
+  for (var i = 0, ii = packages.length; i < ii; i += 1) {
     var next = packages[i];
     if (next.lineno > lineno) {
       break;
