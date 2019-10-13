@@ -1,13 +1,12 @@
-# Workmate
+# Workmate2
 
-Workmate (codenamed 'G') is a Gmail, GCal, and GTasks client for the Pebble smartwatch. It utilizes each one of those Google APIs.
-
-![Pebble App Store Badge](http://pblweb.com/badge/5455d6147871924620000045/orange/small/)
+Workmate2 is a continuation of Workmate (https://github.com/keanulee/workmate)
 
 ## Motivation
 
-Workmate is built exlusively using [Pebble.js](https://pebble.github.io/pebblejs) on [CloudPebble](https://cloudpebble.net) (excluding the configure page). It started as an experiement created during [Pebble's Developer Retreat 2014](https://developer.getpebble.com/events/developer-retreat-2014/).
+The author seemed to abandon the project after Pebble shutting down. (https://github.com/keanulee/workmate/issues/20#issuecomment-493610496).
+As I use http://rebble.io to continue using my Pebble, I fixed this app as I use it quite a bit.
 
 ## Disclaimer
 
-Workmate is a personal project by Keanu Lee and is not affiliated with Google Inc.
+Workmate2 is a personal project by Matt Rinsch and is not affiliated with Google Inc.
