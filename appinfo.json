@@ -9,6 +9,7 @@
     "media": [
       {
         "file": "images/menu_icon.png",
+        "menuIcon": true,
         "name": "IMAGE_MENU_ICON",
         "type": "png"
       },
@@ -34,7 +35,6 @@
       },
       {
         "file": "images/check.png",
-        "menuIcon": true,
         "name": "IMAGES_CHECK_PNG",
         "type": "png"
       },
@@ -71,7 +71,7 @@
     ]
   },
   "sdkVersion": "3",
-  "shortName": "Workmate",
+  "shortName": "Workmate2",
   "uuid": "d3792124-7062-45a8-990f-a4b894d1e489",
   "versionCode": 1,
   "versionLabel": "1.2",

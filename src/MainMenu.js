@@ -1,8 +1,9 @@
 var UI = require('ui');
 var Util = require('Util');
 var MailLabelsList = require('Mail/MailLabelsList');
-var CalendarsList = require('Calendar/CalendarsList');
 var TasksTasklistsList = require('Tasks/TasksTasklistsList');
+var CalendarsList = require('Calendar/CalendarsList');
+
 
 var MainMenu = function() {
   this.menu = new UI.Menu({
@@ -11,11 +12,11 @@ var MainMenu = function() {
         title: 'Mail',
         icon: 'images/envelope.png'
       }, {
-        title: 'Calendar',
-        icon: 'images/calendar.png'
-      }, {
         title: 'Tasks',
         icon: 'images/pushpin.png'
+      }, {
+        title: 'Calendar',
+        icon: 'images/calendar.png'
       }]
     }]
   });
@@ -25,10 +26,10 @@ var MainMenu = function() {
         new MailLabelsList();
         break;
       case 1:
-        new CalendarsList();
+        new TasksTasklistsList();
         break;
       case 2:
-        new TasksTasklistsList();
+        new CalendarsList();
         break;
     }
   });
