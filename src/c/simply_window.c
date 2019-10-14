@@ -8,10 +8,10 @@
 
 #include "simply.h"
 
-#include "util/graphics.h"
-#include "util/scroll_layer.h"
-#include "util/status_bar_layer.h"
-#include "util/string.h"
+#include "graphics.h"
+#include "scroll_layer.h"
+#include "status_bar_layer.h"
+#include "string.h"
 
 #include <pebble.h>
 

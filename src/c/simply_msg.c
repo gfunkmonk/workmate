@@ -11,12 +11,12 @@
 
 #include "simply.h"
 
-#include "util/dict.h"
-#include "util/list1.h"
-#include "util/math.h"
-#include "util/memory.h"
-#include "util/platform.h"
-#include "util/string.h"
+#include "dict.h"
+#include "list1.h"
+#include "math.h"
+#include "memory.h"
+#include "platform.h"
+#include "string.h"
 
 #include <pebble.h>
 

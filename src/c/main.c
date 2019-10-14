@@ -3,7 +3,7 @@
  */
 
 #include <pebble.h>
-#include "simply/simply.h"
+#include "simply.h"
 
 /**
  * By default, we 'simply' load Simply and start running it.

@@ -6,7 +6,7 @@
 
 #include "simply.h"
 
-#include "util/sdk.h"
+#include "sdk.h"
 
 #include <pebble.h>
 

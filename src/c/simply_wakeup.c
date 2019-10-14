@@ -4,7 +4,7 @@
 
 #include "simply.h"
 
-#include "util/compat.h"
+#include "compat.h"
 
 #include <pebble.h>
 

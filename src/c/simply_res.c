@@ -1,10 +1,10 @@
 #include "simply_res.h"
 
-#include "util/color.h"
-#include "util/graphics.h"
-#include "util/memory.h"
-#include "util/sdk.h"
-#include "util/window.h"
+#include "color.h"
+#include "graphics.h"
+#include "memory.h"
+#include "sdk.h"
+#include "window.h"
 
 #include <pebble.h>
 

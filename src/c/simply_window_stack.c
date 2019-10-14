@@ -5,10 +5,10 @@
 
 #include "simply.h"
 
-#include "util/math.h"
-#include "util/none.h"
-#include "util/platform.h"
-#include "util/sdk.h"
+#include "math.h"
+#include "none.h"
+#include "platform.h"
+#include "sdk.h"
 
 #include <pebble.h>
 
